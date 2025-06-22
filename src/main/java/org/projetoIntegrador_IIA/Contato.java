@@ -12,11 +12,12 @@ public class Contato {
         super();
     }
 
-    public Contato(String idcon, String nome, String email, String telefone) {
+    public Contato(String idcon, String nome, String telefone, String email) {
         this.idcon = idcon;
         this.nome = nome;
-        this.email = email;
         this.telefone = telefone;
+        this.email = email;
+
     }
 
     public String getIdcon() {
