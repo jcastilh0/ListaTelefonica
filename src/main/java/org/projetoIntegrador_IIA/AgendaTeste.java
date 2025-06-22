@@ -35,7 +35,9 @@ public class AgendaTeste {
                     novo.setEmail(sc.nextLine());
 
                     agendaTelefonica.adicionarContato(novo);
-                    System.out.println("Contato adicionado com sucesso!");
+                    if (contato.getNome() != null || contato.getTelefone() != null) {
+                        System.out.println("Contato adicionado com sucesso!");
+                    }
                     break;
                 case 2:
                     Contato remover = new Contato();
