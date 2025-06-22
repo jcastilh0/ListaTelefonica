@@ -37,6 +37,13 @@ public class AgendaTelefonica {
      * @param contato Objeto Contato com nome, telefone e e-mail preenchidos.
      */
     public void adicionarContato(Contato contato) {
+
+        if (contato.getNome() == null || contato.getNome().trim().isEmpty() ||
+                contato.getTelefone() == null || contato.getTelefone().trim().isEmpty()) {
+            System.out.println("Erro: nome e telefone são obrigatórios para adicionar um contato.");
+            return;
+        }
+
         String sql = "INSERT INTO contatos (nome, fone, email) VALUES (?, ?, ?)";
 
         try (Connection con = conectar();
@@ -88,10 +95,9 @@ public class AgendaTelefonica {
      */
     public ArrayList<Contato> listarContatos() {
         ArrayList<Contato> contatos = new ArrayList<>();
-        String sql = "SELECT * FROM contatos ORDER BY nome";
-
+        String read = "SELECT * FROM contatos ORDER BY nome";
         try (Connection con = conectar();
-             PreparedStatement pst = con.prepareStatement(sql);
+             PreparedStatement pst = con.prepareStatement(read);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -99,15 +105,17 @@ public class AgendaTelefonica {
                 String nome = rs.getString("nome");
                 String telefone = rs.getString("fone");
                 String email = rs.getString("email");
+
                 contatos.add(new Contato(idcon, nome, telefone, email));
             }
 
+            return contatos;
         } catch (Exception e) {
-            System.err.println("Erro ao listar contatos: " + e.getMessage());
+            System.out.println("Erro ao listar contatos: " + e.getMessage());
+            return null;
         }
-
-        return contatos;
     }
+
 
     /**
      * Remove um contato da base de dados com base no ID ou nome.
